@@ -2,7 +2,6 @@ package hlaaftana.technocracy
 
 import groovy.transform.CompileStatic
 
-import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.event.MouseInputAdapter
 import java.awt.Color
@@ -19,27 +18,27 @@ class MainMenuPanel extends JPanel {
 	Rectangle2D playBounds
 
 	MainMenuPanel() {
-		def mi = new MouseInputAdapter() {
-			@CompileStatic
-			void mouseMoved(MouseEvent e){
-				hoveringPlay = playBounds?.contains(e.x, e.y)
-				repaint()
-			}
-
-			@CompileStatic
-			void mouseClicked(MouseEvent e) {
-				if (!hoveringPlay) return
-				def game = new GamePanel(camera: new Camera(universe: Main.universe))
-				def frame = e.component.parent
-				frame.remove(MainMenuPanel.this)
-				frame.add(game)
-				frame.revalidate()
-				frame.repaint()
-				game.grabFocus()
-			}
-		}
+		def mi = new Ugoogogogog()
 		addMouseListener(mi)
 		addMouseMotionListener(mi)
+	}
+
+	class Ugoogogogog extends MouseInputAdapter {
+		void mouseMoved(MouseEvent e) {
+			hoveringPlay = playBounds?.contains(e.x, e.y)
+			repaint()
+		}
+
+		void mouseClicked(MouseEvent e) {
+			if (!hoveringPlay) return
+			def game = new GamePanel(camera: new Camera(universe: Main.universe))
+			def frame = e.component.parent
+			frame.remove(MainMenuPanel.this)
+			frame.add(game)
+			frame.revalidate()
+			frame.repaint()
+			game.grabFocus()
+		}
 	}
 
 	void paintComponent(Graphics g) {
