@@ -9,6 +9,6 @@ class Planet {
 	int distanceFromStar
 	BigDecimal orbitSpeed
 	int orbitPosition
-	Map<Material, Integer> layers
+	List<Material.IntPair> layers
 	Color orbitColor
 }

@@ -10,10 +10,8 @@ import java.math.RoundingMode
 
 @CompileStatic
 class Camera {
-	int width
-	int height
-	int xPos
-	int yPos
+	int width, height
+	int xPos, yPos
 	BigDecimal zoom = 0.25
 	Universe universe
 
@@ -37,7 +35,7 @@ class Camera {
 		new VisibleChunkIterator(cx1, cy1, cx2, cy2)
 	}
 
-	// compilestatic doesnt work for anonymous classes
+	// anonymous classes are heavy
 	static class VisibleChunkIterator implements Iterator<Int2> {
 		public int cx, cy
 		public final int cx1, cy1, cx2, cy2
@@ -91,12 +89,13 @@ class Camera {
 						g.paint = p.orbitColor
 						def orbitDiameter = (p.distanceFromStar * 2 + s.energy * 2) * zoom
 						g.drawOval(e, f, (int) orbitDiameter, (int) orbitDiameter)
-						def planetAngle = orbitDiameter == 0 ? 0.0 : (p.orbitPosition / orbitDiameter) * Math.PI
+						def planetAngle = orbitDiameter == 0 ? 0.0d : (double) ((p.orbitPosition / orbitDiameter) * Math.PI)
 						def planetOriginX = c + s.energy * zoom + (orbitDiameter / 2) * Math.cos(planetAngle)
 						def planetOriginY = d + s.energy * zoom + (orbitDiameter / 2) * Math.sin(planetAngle)
-						int sum = (int) p.layers.values().sum()
-						for (en in p.layers) {
-							def m = en.key, amount = en.value
+						int sum = 0
+						for (en in p.layers) sum += en.value
+						for (pair in p.layers) {
+							final m = pair.material, amount = pair.value
 							g.color = m.color
 							g.fillOval((int) (planetOriginX - sum * zoom), (int) (planetOriginY - sum * zoom),
 									(int) (sum * zoom * 2), (int) (sum * zoom * 2))

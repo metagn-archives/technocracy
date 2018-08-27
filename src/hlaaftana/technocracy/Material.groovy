@@ -11,4 +11,14 @@ enum Material {
 
 	Color color
 	Material(int clr){ color = new Color(clr) }
+
+	static class IntPair {
+		Material material
+		int value
+
+		IntPair(Material material, int value) {
+			this.material = material
+			this.value = value
+		}
+	}
 }
