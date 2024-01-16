@@ -1,4 +1,4 @@
-package hlaaftana.technocracy
+package metagn.technocracy
 
 import groovy.transform.CompileStatic
 

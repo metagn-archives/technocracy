@@ -1,4 +1,4 @@
-package hlaaftana.technocracy
+package metagn.technocracy
 
 import groovy.transform.CompileStatic
 
@@ -82,7 +82,7 @@ class Camera {
 				int d = -yPos + (int) ((s.y - s.energy) * zoom)
 				if (c > 0 && c < width && d > 0 && d < height) {
 					g.paint = g.color = s.color
-					g.fillOval(c, d, (int) s.energy * 2 * zoom, (int) s.energy * 2 * zoom)
+					g.fillOval(c, d, (int) (s.energy * 2 * zoom), (int) (s.energy * 2 * zoom))
 					for (p in s.planets) {
 						int e = c - (int) (p.distanceFromStar * zoom)
 						int f = d - (int) (p.distanceFromStar * zoom)
