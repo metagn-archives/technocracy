@@ -23,10 +23,10 @@ class Universe {
 			def materials = Material.values() as ArrayList<Material>
 			gen.shuffleMaterials(star, planet, materials)
 			final layerAmount = gen.planetLayerAmount(star, planet)
-			def layers = new HashMap<Material, Integer>(layerAmount, 1)
+			def layers = new ArrayList<Material.IntPair>(layerAmount)
 			for (int j = 0; j < layerAmount; ++j) {
 				final material = materials[j]
-				layers.put(material, gen.planetLayerSize(star, planet, material))
+				layers.add(new Material.IntPair(material, gen.planetLayerSize(star, planet, material)))
 			}
 			planet.layers = layers
 			planet.distanceFromStar = gen.planetDistance(star, planet)
