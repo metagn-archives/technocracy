@@ -34,22 +34,33 @@ class Camera {
 		      cy1 = (int) (y / universe.chunkYSize).round(ROUND_DOWN)
 		final cx2 = (int) ((x + w) / universe.chunkXSize).round(ROUND_UP),
 		      cy2 = (int) ((y + h) / universe.chunkYSize).round(ROUND_UP)
-		new Iterator<Int2>() {
-			public int cx = cx1, cy = cy1
+		new VisibleChunkIterator(cx1, cy1, cx2, cy2)
+	}
 
-			public boolean more = true
-			boolean hasNext() { more }
+	// compilestatic doesnt work for anonymous classes
+	static class VisibleChunkIterator implements Iterator<Int2> {
+		public int cx, cy
+		public final int cx1, cy1, cx2, cy2
 
-			Int2 next() {
-				final result = new Int2(cx, cy)
-				++cy
-				if (cy > cy2) {
-					cy = cy1
-					++cx
-				}
-				if (cx > cx2) more = false
-				result
+		VisibleChunkIterator(int cx1, int cy1, int cx2, int cy2) {
+			cx = this.cx1 = cx1
+			cy = this.cy1 = cy1
+			this.cx2 = cx2
+			this.cy2 = cy2
+		}
+
+		public boolean more = true
+		boolean hasNext() { more }
+
+		Int2 next() {
+			final result = new Int2(cx, cy)
+			++cy
+			if (cy > cy2) {
+				cy = cy1
+				++cx
 			}
+			if (cx > cx2) more = false
+			result
 		}
 	}
 

@@ -35,13 +35,22 @@ class GamePanel extends JPanel {
 				}
 			}
 		})
-		timer.scheduleAtFixedRate(this.&repaint as TimerTask, 0, 16)
+		timer.scheduleAtFixedRate(
+			new AnonymousClassesArentStaticallyCompiledNorAreMethodClosuresOrClassesCreatedAtCoercionTime(), 0, 16)
+	}
+
+	class AnonymousClassesArentStaticallyCompiledNorAreMethodClosuresOrClassesCreatedAtCoercionTime extends TimerTask {
+		void run() {
+			repaint()
+		}
 	}
 
 	void paintComponent(Graphics g) {
 		super.paintComponent(g)
 		camera.width = width
 		camera.height = height
+		g.drawImage(camera.draw(), 0, 0, null)
+
 		/*def newChunks = new HashSet<Int2>()
 		final BigDecimal realWidth, realHeight
 		if (camera.zoom == 0) realWidth = realHeight = 0.0
@@ -73,6 +82,5 @@ class GamePanel extends JPanel {
 			final x = p.x, y = p.y
 			camera.universe.generateArea(x * areaXSize, y * areaYSize, (x + 1) * areaXSize, (y + 1) * areaYSize)
 		}*/
-		g.drawImage(camera.draw(), 0, 0, null)
 	}
 }
